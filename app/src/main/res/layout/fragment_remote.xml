@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LocalFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="250dp"
+            android:text="Matches"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/matchDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="Date"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <EditText
+            android:id="@+id/matchCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="City"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/matchDate" />
+
+        <EditText
+            android:id="@+id/matchCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Country"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/matchCity" />
+
+        <EditText
+            android:id="@+id/matchSport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Sport"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/matchCountry" />
+
+        <Button
+            android:id="@+id/matchesNew"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginEnd="100dp"
+            android:text="NEW"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/newPlayer" />
+
+        <Button
+            android:id="@+id/matchesRemove"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="100dp"
+            android:text="DELETE"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/newPlayer" />
+
+        <Button
+            android:id="@+id/matchesNext"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="250dp"
+            android:text="►"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/textView6"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/addPlayer"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="410dp"
+            android:text="+"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/newPlayer"
+            app:layout_constraintTop_toBottomOf="@+id/matchesNext" />
+
+        <Button
+            android:id="@+id/matchesPrev"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="250dp"
+            android:layout_marginEnd="50dp"
+            android:text="◄"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/removePlayer"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="410dp"
+            android:layout_marginEnd="10dp"
+            android:text="-"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/newPlayer"
+            app:layout_constraintTop_toBottomOf="@+id/matchesPrev" />
+
+        <Button
+            android:id="@+id/update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SAVE"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/matchesNew" />
+
+        <ListView
+            android:id="@+id/matchPlayers"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/matchSport" />
+
+        <EditText
+            android:id="@+id/newPlayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Add player"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/matchPlayers" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

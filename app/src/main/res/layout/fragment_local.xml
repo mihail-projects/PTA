@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LocalFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sports"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="250dp"
+            android:text="Athletes"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="630dp"
+            android:hint="Teams"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/sportName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <EditText
+            android:id="@+id/sportType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sportName" />
+
+        <EditText
+            android:id="@+id/sportGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Gender"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sportType" />
+
+        <EditText
+            android:id="@+id/matchDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <EditText
+            android:id="@+id/matchCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Lastname"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/matchDate" />
+
+        <EditText
+            android:id="@+id/matchCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="City"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/matchCity" />
+
+        <EditText
+            android:id="@+id/matchSport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Country"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/matchCountry" />
+
+        <EditText
+            android:id="@+id/athleteSportCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="Sport code"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/matchSport" />
+
+        <EditText
+            android:id="@+id/teamName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <EditText
+            android:id="@+id/teamStadium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Stadium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamName" />
+
+        <EditText
+            android:id="@+id/teamCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="City"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamStadium" />
+
+        <EditText
+            android:id="@+id/teamCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Country"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamCity" />
+
+        <EditText
+            android:id="@+id/teamSportCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="Sport code"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamCountry" />
+
+        <EditText
+            android:id="@+id/teamFounding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="Founding year"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamSportCode" />
+
+        <EditText
+            android:id="@+id/athleteBirth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/athleteSportCode"
+            android:hint="Birth date" />
+
+        <Button
+            android:id="@+id/sportsNext"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="70dp"
+            android:text="►"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/sportType"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <Button
+            android:id="@+id/sportsNew"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="170dp"
+            android:text="NEW"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sportGender" />
+
+        <Button
+            android:id="@+id/matchesNew"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="170dp"
+            android:text="NEW"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/athleteBirth" />
+
+        <Button
+            android:id="@+id/teamsNew"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="170dp"
+            android:text="NEW"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamFounding" />
+
+        <Button
+            android:id="@+id/sportsRemove"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="25dp"
+            android:text="DELETE"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/sportsNew"
+            app:layout_constraintTop_toBottomOf="@+id/sportGender" />
+
+        <Button
+            android:id="@+id/matchesRemove"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="25dp"
+            android:text="DELETE"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/matchesNew"
+            app:layout_constraintTop_toBottomOf="@+id/athleteBirth" />
+
+        <Button
+            android:id="@+id/teamsRemove"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="25dp"
+            android:text="DELETE"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/teamsNew"
+            app:layout_constraintTop_toBottomOf="@+id/teamFounding" />
+
+        <Button
+            android:id="@+id/matchesNext"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="130dp"
+            android:text="►"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/matchSport"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <Button
+            android:id="@+id/teamsNext"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="130dp"
+            android:text="►"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/teamCountry"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <Button
+            android:id="@+id/sportsPrev"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="70dp"
+            android:text="◄"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/sportType"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <Button
+            android:id="@+id/matchesPrev"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="130dp"
+            android:text="◄"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/matchSport"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <Button
+            android:id="@+id/teamsPrev"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="130dp"
+            android:text="◄"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/teamCountry"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <Button
+            android:id="@+id/update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SAVE"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamsNew" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
