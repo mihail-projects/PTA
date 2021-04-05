@@ -107,13 +107,7 @@ public class RemoteFragment extends Fragment {
             matchSport = view.findViewById(R.id.matchSport);
 
             playersList = view.findViewById(R.id.matchPlayers);
-
-            playersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    listPos = arg2;
-                }
-            });
+            playersList.setOnItemClickListener((arg0, arg1, arg2, arg3) -> listPos = arg2);
 
             newPlayer = view.findViewById(R.id.newPlayer);
 
@@ -125,7 +119,27 @@ public class RemoteFragment extends Fragment {
             db.collection("matches").get().addOnCompleteListener(task -> {
 
                 if (task.isSuccessful()) {
+
                     documents = task.getResult().getDocuments();
+
+                    if(documents != null){
+
+                        matchDate.setText(documents.get(0).getString("name"));
+                        matchCity.setText(documents.get(0).getString("city"));
+                        matchCountry.setText(documents.get(0).getString("country"));
+                        matchSport.setText(documents.get(0).getString("sport"));
+
+                        String playersLine = documents.get(0).getString("players");
+                        String[] players = playersLine.split("-");
+
+                        for(int i = 0; i < players.length; i++) {
+                            arrayAdapter.add(players[i]);
+                        }
+
+                        playersList.setAdapter(arrayAdapter);
+
+                    }
+
                 } else {
                     Log.w(TAG, "Error getting documents.", task.getException());
                 }
@@ -163,20 +177,6 @@ public class RemoteFragment extends Fragment {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }*/
-
-            if(documents != null && documents.size() > 0){
-
-                matchDate.setText(documents.get(0).getString("name"));
-                matchCity.setText(documents.get(0).getString("city"));
-                matchCountry.setText(documents.get(0).getString("country"));
-                matchSport.setText(documents.get(0).getString("sport"));
-
-                String playersLine = documents.get(0).getString("players");
-                String[] players = playersLine.split("-");
-
-                playersList.setAdapter(arrayAdapter);
-
-            }
 
             view.findViewById(R.id.addPlayer).setOnClickListener(v -> {
 
@@ -220,7 +220,7 @@ public class RemoteFragment extends Fragment {
                     data.put("country", matchCountry.getText().toString());
                     data.put("sport", matchSport.getText().toString());
 
-                    String players = null;
+                    String players = "";
 
                     for(int i = 0; i < playersList.getCount(); i++){
                         players += playersList.getAdapter().getItem(i) + "-";
@@ -228,7 +228,7 @@ public class RemoteFragment extends Fragment {
 
                     data.put("players", players);
 
-                    db.collection("users").add(data)
+                    db.collection("matches").add(data)
                             .addOnSuccessListener(documentReference -> Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId()))
                             .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
 
