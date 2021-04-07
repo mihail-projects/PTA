@@ -5,11 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -92,6 +90,7 @@ public class RemoteFragment extends Fragment {
     ArrayList<String> list;
 
     int listPos;
+    boolean xNew;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -116,15 +115,16 @@ public class RemoteFragment extends Fragment {
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+
             db.collection("matches").get().addOnCompleteListener(task -> {
 
                 if (task.isSuccessful()) {
 
                     documents = task.getResult().getDocuments();
 
-                    if(documents != null){
+                    if(documents != null && documents.size() > 0){
 
-                        matchDate.setText(documents.get(0).getString("name"));
+                        matchDate.setText(documents.get(0).getString("date"));
                         matchCity.setText(documents.get(0).getString("city"));
                         matchCountry.setText(documents.get(0).getString("country"));
                         matchSport.setText(documents.get(0).getString("sport"));
@@ -146,37 +146,6 @@ public class RemoteFragment extends Fragment {
 
             });
 
-            /*File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/pta1-309707-e36314cfcb29.json");
-
-
-            GoogleCredentials credentials = null;
-
-            try {
-                credentials = GoogleCredentials.fromStream(new FileInputStream(file)).createScoped(Lists.newArrayList("https://www.googleapis.com/auth/cloud-platform"));;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // Use the application default credentials
-            FirebaseOptions options = null;
-            options = FirebaseOptions.builder().setCredentials(credentials).setProjectId("pta1-f8c21").build();
-
-            FirebaseApp.initializeApp(options);
-            Firestore db = FirestoreClient.getFirestore();
-
-
-            // asynchronously retrieve all users
-            ApiFuture<QuerySnapshot> query = db.collection("matches").get();
-
-            // query.get() blocks on response
-            QuerySnapshot querySnapshot = null;
-            try {
-                querySnapshot = query.get();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
 
             view.findViewById(R.id.addPlayer).setOnClickListener(v -> {
 
@@ -187,56 +156,54 @@ public class RemoteFragment extends Fragment {
 
             });
 
+
             view.findViewById(R.id.removePlayer).setOnClickListener(v -> {
                 arrayAdapter.remove(playersList.getAdapter().getItem(listPos).toString());
                 playersList.setAdapter(arrayAdapter);
             });
 
+
             view.findViewById(R.id.update).setOnClickListener(v -> {
 
                 if(!matchDate.getText().toString().isEmpty() && !matchCity.getText().toString().isEmpty() && !matchCountry.getText().toString().isEmpty() && !matchSport.getText().toString().isEmpty() && playersList.getCount() > 0){
 
-                    /*DocumentReference docRef = db.collection("matches").document(String.valueOf(Math.random()));
-
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("date", matchDate.getText().toString());
-                    data.put("city", matchCity.getText().toString());
-                    data.put("country", matchCountry.getText().toString());
-                    data.put("sport", matchSport.getText().toString());
-                    
-                    String players = null;
-                    
-                    for(int i = 0; i < playersList.getCount(); i++){
-                        players += playersList.getAdapter().getItem(i) + "-";
-                    }
-
-                    data.put("players", players);
-
-                    ApiFuture<WriteResult> result = docRef.set(data);*/
-
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("date", matchDate.getText().toString());
-                    data.put("city", matchCity.getText().toString());
-                    data.put("country", matchCountry.getText().toString());
-                    data.put("sport", matchSport.getText().toString());
-
                     String players = "";
 
-                    for(int i = 0; i < playersList.getCount(); i++){
+                    for (int i = 0; i < playersList.getCount(); i++) {
                         players += playersList.getAdapter().getItem(i) + "-";
                     }
 
-                    data.put("players", players);
+                    if(xNew || (documents == null || documents.size() == 0)) {
 
-                    db.collection("matches").add(data)
-                            .addOnSuccessListener(documentReference -> Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId()))
-                            .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("date", matchDate.getText().toString());
+                        data.put("city", matchCity.getText().toString());
+                        data.put("country", matchCountry.getText().toString());
+                        data.put("sport", matchSport.getText().toString());
+
+                        data.put("players", players);
+
+                        db.collection("matches").add(data)
+                                .addOnSuccessListener(documentReference -> Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId()))
+                                .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
+
+                    }else{
+
+                        db.collection("matches").document(documents.get(index).getId())
+                                .update("date", matchDate.getText().toString(), "city", matchCity.getText().toString(), "country", matchCountry.getText().toString(), "sport", matchSport.getText().toString(), "players", players);
+
+                    }
+
+                    xNew = false;
 
                 }
 
             });
 
-            view.findViewById(R.id.matchesNew).setOnClickListener(v -> {
+
+            view.findViewById(R.id.athletesNew).setOnClickListener(v -> {
+
+                xNew = true;
 
                 matchDate.setText("");
                 matchCity.setText("");
@@ -246,9 +213,16 @@ public class RemoteFragment extends Fragment {
 
             });
 
-            view.findViewById(R.id.matchesRemove).setOnClickListener(v -> {
 
-                if(documents.size() > 0){
+            view.findViewById(R.id.athletesRemove).setOnClickListener(v -> {
+
+                if(xNew){
+                    xNew = false;
+                    index = 0;
+                    return;
+                }
+
+                if(documents != null && documents.size() > 0){
 
                     db.collection("matches").document(documents.get(listPos).getId()).delete();
 
@@ -262,7 +236,14 @@ public class RemoteFragment extends Fragment {
 
             });
 
-            getView().findViewById(R.id.matchesPrev).setOnClickListener(v -> {
+
+            getView().findViewById(R.id.athletesPrev).setOnClickListener(v -> {
+
+                if(xNew){
+                    xNew = false;
+                    index = 0;
+                    return;
+                }
 
                 if (documents.size() > 0) {
 
@@ -272,7 +253,7 @@ public class RemoteFragment extends Fragment {
                         index++;
                     }
 
-                    matchDate.setText(documents.get(index).getString("name"));
+                    matchDate.setText(documents.get(index).getString("date"));
                     matchCity.setText(documents.get(index).getString("city"));
                     matchCountry.setText(documents.get(index).getString("country"));
                     matchSport.setText(documents.get(index).getString("sport"));
@@ -288,7 +269,14 @@ public class RemoteFragment extends Fragment {
 
             });
 
-            view.findViewById(R.id.matchesNext).setOnClickListener(v -> {
+
+            view.findViewById(R.id.athletesNext).setOnClickListener(v -> {
+
+                if(xNew){
+                    xNew = false;
+                    index = 0;
+                    return;
+                }
 
                 if (documents.size() > 0) {
 
@@ -298,7 +286,7 @@ public class RemoteFragment extends Fragment {
                         index--;
                     }
 
-                    matchDate.setText(documents.get(index).getString("name"));
+                    matchDate.setText(documents.get(index).getString("date"));
                     matchCity.setText(documents.get(index).getString("city"));
                     matchCountry.setText(documents.get(index).getString("country"));
                     matchSport.setText(documents.get(index).getString("sport"));

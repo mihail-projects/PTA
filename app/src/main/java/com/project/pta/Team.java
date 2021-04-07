@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Team {
 
-    public Team(String name, String stadium, String city, String country, int sportCode, int foundingYear){
+    public Team(int tid, String name, String stadium, String city, String country, int sportCode, int foundingYear){
+        this.tid = tid;
         this.name = name;
         this.stadium = stadium;
         this.city = city;

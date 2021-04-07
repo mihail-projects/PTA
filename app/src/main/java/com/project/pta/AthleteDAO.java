@@ -14,9 +14,6 @@ public interface AthleteDAO {
     @Query("SELECT * FROM athlete")
     List<Athlete> getAll();
 
-    @Query("SELECT * FROM athlete WHERE aid IN (:athleteIds)")
-    List<Athlete> loadAllByIds(int[] athleteIds);
-
     @Insert
     void insert(Athlete athlete);
 

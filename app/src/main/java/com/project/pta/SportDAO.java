@@ -14,9 +14,6 @@ public interface SportDAO {
     @Query("SELECT * FROM sport")
     List<Sport> getAll();
 
-    @Query("SELECT * FROM sport WHERE sid IN (:sportIds)")
-    List<Sport> loadAllByIds(int[] sportIds);
-
     @Insert
     void insert(Sport sport);
 

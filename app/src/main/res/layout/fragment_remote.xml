@@ -68,7 +68,7 @@
             app:layout_constraintTop_toBottomOf="@+id/matchCountry" />
 
         <Button
-            android:id="@+id/matchesNew"
+            android:id="@+id/athletesNew"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginEnd="100dp"
@@ -79,7 +79,7 @@
             app:layout_constraintTop_toBottomOf="@+id/newPlayer" />
 
         <Button
-            android:id="@+id/matchesRemove"
+            android:id="@+id/athletesRemove"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="100dp"
@@ -90,7 +90,7 @@
             app:layout_constraintTop_toBottomOf="@+id/newPlayer" />
 
         <Button
-            android:id="@+id/matchesNext"
+            android:id="@+id/athletesNext"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="50dp"
@@ -109,10 +109,10 @@
             android:text="+"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/newPlayer"
-            app:layout_constraintTop_toBottomOf="@+id/matchesNext" />
+            app:layout_constraintTop_toBottomOf="@+id/athletesNext" />
 
         <Button
-            android:id="@+id/matchesPrev"
+            android:id="@+id/athletesPrev"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="250dp"
@@ -131,7 +131,7 @@
             android:text="-"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/newPlayer"
-            app:layout_constraintTop_toBottomOf="@+id/matchesPrev" />
+            app:layout_constraintTop_toBottomOf="@+id/athletesPrev" />
 
         <Button
             android:id="@+id/update"
@@ -141,7 +141,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/matchesNew" />
+            app:layout_constraintTop_toBottomOf="@+id/athletesNew" />
 
         <ListView
             android:id="@+id/matchPlayers"

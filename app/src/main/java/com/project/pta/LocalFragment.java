@@ -98,6 +98,11 @@ public class LocalFragment extends Fragment {
     List<Team> teams;
     List<Athlete> athletes;
 
+    boolean sNew = false;
+    boolean aNew = false;
+    boolean tNew = false;
+
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 
@@ -149,17 +154,33 @@ public class LocalFragment extends Fragment {
             view.findViewById(R.id.update).setOnClickListener(v -> {
 
                 if(!sportName.getText().toString().isEmpty() && !sportType.getText().toString().isEmpty() && !sportGender.getText().toString().isEmpty()){
-                    sportDAO.insert(new Sport(sportName.getText().toString(), sportType.getText().toString(), sportGender.getText().toString()));
-                    Toast.makeText(view.getContext(),"Added/Updated Sport",Toast.LENGTH_SHORT).show();
+
+                    if(sNew || sports.size() == 0) {
+                        sportDAO.insert(new Sport(0, sportName.getText().toString(), sportType.getText().toString(), sportGender.getText().toString()));
+                        Toast.makeText(view.getContext(), "Added Sport", Toast.LENGTH_SHORT).show();
+                        sNew = false;
+                    }else{
+                        sportDAO.update(new Sport(sports.get(sportIndex).sid, sportName.getText().toString(), sportType.getText().toString(), sportGender.getText().toString()));
+                        Toast.makeText(view.getContext(), "Updated Sport", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
                 if(!athleteName.getText().toString().isEmpty() && !athleteLastname.getText().toString().isEmpty() && !athleteCity.getText().toString().isEmpty() && !athleteCountry.getText().toString().isEmpty() && !athleteSportCode.getText().toString().isEmpty() && !athleteBirthYear.getText().toString().isEmpty()){
 
                     if(Integer.parseInt(athleteSportCode.getText().toString()) > sports.size()-1){
-                        Toast.makeText(view.getContext(),"Sport doest exist",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(),"Sport doesn't exist",Toast.LENGTH_SHORT).show();
                     }else {
-                        athleteDAO.insert(new Athlete(athleteName.getText().toString(), athleteLastname.getText().toString(), athleteCity.getText().toString(), athleteCountry.getText().toString(), Integer.parseInt(athleteSportCode.getText().toString()), Integer.parseInt(athleteBirthYear.getText().toString())));
-                        Toast.makeText(view.getContext(), "Added/Updated Athlete", Toast.LENGTH_SHORT).show();
+
+                        if(aNew || athletes.size() == 0) {
+                            athleteDAO.insert(new Athlete(0, athleteName.getText().toString(), athleteLastname.getText().toString(), athleteCity.getText().toString(), athleteCountry.getText().toString(), Integer.parseInt(athleteSportCode.getText().toString()), Integer.parseInt(athleteBirthYear.getText().toString())));
+                            Toast.makeText(view.getContext(), "Added Athlete", Toast.LENGTH_SHORT).show();
+                            aNew = false;
+                        }else{
+                            athleteDAO.update(new Athlete(athletes.get(athleteIndex).aid, athleteName.getText().toString(), athleteLastname.getText().toString(), athleteCity.getText().toString(), athleteCountry.getText().toString(), Integer.parseInt(athleteSportCode.getText().toString()), Integer.parseInt(athleteBirthYear.getText().toString())));
+                            Toast.makeText(view.getContext(), "Updated Athlete", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
                 }
@@ -167,10 +188,18 @@ public class LocalFragment extends Fragment {
                 if(!teamName.getText().toString().isEmpty() && !teamStadium.getText().toString().isEmpty() && !teamCity.getText().toString().isEmpty() && !teamCountry.getText().toString().isEmpty() && !teamSportCode.getText().toString().isEmpty() && !teamFoundingYear.getText().toString().isEmpty()){
 
                     if(Integer.parseInt(teamSportCode.getText().toString()) > sports.size()-1){
-                        Toast.makeText(view.getContext(),"Sport doest exist",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(),"Sport doesn't exist",Toast.LENGTH_SHORT).show();
                     }else {
-                        teamDAO.insert(new Team(teamName.getText().toString(), teamStadium.getText().toString(), teamCity.getText().toString(), teamCountry.getText().toString(), Integer.parseInt(teamSportCode.getText().toString()), Integer.parseInt(teamFoundingYear.getText().toString())));
-                        Toast.makeText(view.getContext(), "Added/Updated Team", Toast.LENGTH_SHORT).show();
+
+                        if(tNew || teams.size() == 0) {
+                            teamDAO.insert(new Team(0, teamName.getText().toString(), teamStadium.getText().toString(), teamCity.getText().toString(), teamCountry.getText().toString(), Integer.parseInt(teamSportCode.getText().toString()), Integer.parseInt(teamFoundingYear.getText().toString())));
+                            Toast.makeText(view.getContext(), "Added Team", Toast.LENGTH_SHORT).show();
+                            tNew = false;
+                        }else{
+                            teamDAO.update(new Team(teams.get(teamIndex).tid, teamName.getText().toString(), teamStadium.getText().toString(), teamCity.getText().toString(), teamCountry.getText().toString(), Integer.parseInt(teamSportCode.getText().toString()), Integer.parseInt(teamFoundingYear.getText().toString())));
+                            Toast.makeText(view.getContext(), "Updated Team", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
                 }
@@ -178,12 +207,19 @@ public class LocalFragment extends Fragment {
             });
 
             view.findViewById(R.id.sportsNew).setOnClickListener(v -> {
+                sNew = true;
                 sportName.setText("");
                 sportType.setText("");
                 sportGender.setText("");
             });
 
             view.findViewById(R.id.sportsRemove).setOnClickListener(v -> {
+
+                if(sNew){
+                    sNew = false;
+                    sportIndex = 0;
+                    return;
+                }
 
                 if(sports.size() > 0){
 
@@ -194,11 +230,14 @@ public class LocalFragment extends Fragment {
                     sportDAO.delete(sports.get(sportIndex));
                     Toast.makeText(view.getContext(),"Deleted",Toast.LENGTH_SHORT).show();
 
+                    sportIndex = 0;
+
                 }
 
             });
 
-            view.findViewById(R.id.matchesNew).setOnClickListener(v -> {
+            view.findViewById(R.id.athletesNew).setOnClickListener(v -> {
+                aNew = true;
                 athleteName.setText("");
                 athleteLastname.setText("");
                 athleteCity.setText("");
@@ -207,7 +246,13 @@ public class LocalFragment extends Fragment {
                 athleteBirthYear.setText("");
             });
 
-            view.findViewById(R.id.matchesRemove).setOnClickListener(v -> {
+            view.findViewById(R.id.athletesRemove).setOnClickListener(v -> {
+
+                if(aNew){
+                    aNew = false;
+                    athleteIndex = 0;
+                    return;
+                }
 
                 if(athletes.size() > 0){
 
@@ -221,11 +266,15 @@ public class LocalFragment extends Fragment {
                     athleteDAO.delete(athletes.get(athleteIndex));
                     Toast.makeText(view.getContext(),"Deleted",Toast.LENGTH_SHORT).show();
 
+                    athleteIndex = 0;
+
+
                 }
 
             });
 
             view.findViewById(R.id.teamsNew).setOnClickListener(v -> {
+                tNew = true;
                 teamName.setText("");
                 teamStadium.setText("");
                 teamCity.setText("");
@@ -235,6 +284,12 @@ public class LocalFragment extends Fragment {
             });
 
             view.findViewById(R.id.teamsRemove).setOnClickListener(v -> {
+
+                if(tNew){
+                    tNew = false;
+                    teamIndex = 0;
+                    return;
+                }
 
                 if(teams.size() > 0){
 
@@ -248,11 +303,19 @@ public class LocalFragment extends Fragment {
                     teamDAO.delete(teams.get(teamIndex));
                     Toast.makeText(view.getContext(),"Deleted",Toast.LENGTH_SHORT).show();
 
+                    teamIndex = 0;
+
                 }
 
             });
 
             getView().findViewById(R.id.sportsNext).setOnClickListener(v -> {
+
+                if(sNew){
+                    sNew = false;
+                    sportIndex = 0;
+                    return;
+                }
 
                 if (sports.size() > 0) {
 
@@ -270,6 +333,12 @@ public class LocalFragment extends Fragment {
 
             view.findViewById(R.id.sportsPrev).setOnClickListener(v -> {
 
+                if(sNew){
+                    sNew = false;
+                    sportIndex = 0;
+                    return;
+                }
+
                 if (sports.size() > 0) {
 
                     if (sportIndex == 0) {
@@ -285,6 +354,12 @@ public class LocalFragment extends Fragment {
             });
 
             view.findViewById(R.id.teamsNext).setOnClickListener(v -> {
+
+                if(tNew){
+                    tNew = false;
+                    teamIndex = 0;
+                    return;
+                }
 
                 if (teams.size() > 0) {
 
@@ -302,6 +377,12 @@ public class LocalFragment extends Fragment {
 
             view.findViewById(R.id.teamsPrev).setOnClickListener(v -> {
 
+                if(tNew){
+                    tNew = false;
+                    teamIndex = 0;
+                    return;
+                }
+
                 if (teams.size() > 0) {
 
                     if (teamIndex == 0) {
@@ -316,7 +397,13 @@ public class LocalFragment extends Fragment {
 
             });
 
-            view.findViewById(R.id.matchesNext).setOnClickListener(v -> {
+            view.findViewById(R.id.athletesNext).setOnClickListener(v -> {
+
+                if(aNew){
+                    aNew = false;
+                    athleteIndex = 0;
+                    return;
+                }
 
                 if (athletes.size() > 0) {
 
@@ -332,7 +419,13 @@ public class LocalFragment extends Fragment {
 
             });
 
-            view.findViewById(R.id.matchesPrev).setOnClickListener(v -> {
+            view.findViewById(R.id.athletesPrev).setOnClickListener(v -> {
+
+                if(aNew){
+                    aNew = false;
+                    athleteIndex = 0;
+                    return;
+                }
 
                 if (athletes.size() > 0) {
 

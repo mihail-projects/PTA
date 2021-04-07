@@ -14,9 +14,6 @@ public interface TeamDAO {
     @Query("SELECT * FROM team")
     List<Team> getAll();
 
-    @Query("SELECT * FROM team WHERE tid IN (:teamIds)")
-    List<Team> loadAllByIds(int[] teamIds);
-
     @Insert
     void insert(Team team);
 

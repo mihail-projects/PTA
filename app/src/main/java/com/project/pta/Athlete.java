@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Athlete {
 
-    public Athlete(String name, String lastname, String city, String country, int sportCode, int birthYear){
+    public Athlete(int aid, String name, String lastname, String city, String country, int sportCode, int birthYear){
+        this.aid = aid;
         this.name = name;
         this.lastname = lastname;
         this.city = city;
