@@ -164,6 +164,8 @@ public class LocalFragment extends Fragment {
                         Toast.makeText(view.getContext(), "Updated Sport", Toast.LENGTH_SHORT).show();
                     }
 
+                    sports = sportDAO.getAll();
+
                 }
 
                 if(!athleteName.getText().toString().isEmpty() && !athleteLastname.getText().toString().isEmpty() && !athleteCity.getText().toString().isEmpty() && !athleteCountry.getText().toString().isEmpty() && !athleteSportCode.getText().toString().isEmpty() && !athleteBirthYear.getText().toString().isEmpty()){
@@ -180,6 +182,8 @@ public class LocalFragment extends Fragment {
                             athleteDAO.update(new Athlete(athletes.get(athleteIndex).aid, athleteName.getText().toString(), athleteLastname.getText().toString(), athleteCity.getText().toString(), athleteCountry.getText().toString(), Integer.parseInt(athleteSportCode.getText().toString()), Integer.parseInt(athleteBirthYear.getText().toString())));
                             Toast.makeText(view.getContext(), "Updated Athlete", Toast.LENGTH_SHORT).show();
                         }
+
+                        athletes = athleteDAO.getAll();
 
                     }
 
@@ -199,6 +203,8 @@ public class LocalFragment extends Fragment {
                             teamDAO.update(new Team(teams.get(teamIndex).tid, teamName.getText().toString(), teamStadium.getText().toString(), teamCity.getText().toString(), teamCountry.getText().toString(), Integer.parseInt(teamSportCode.getText().toString()), Integer.parseInt(teamFoundingYear.getText().toString())));
                             Toast.makeText(view.getContext(), "Updated Team", Toast.LENGTH_SHORT).show();
                         }
+
+                        teams = teamDAO.getAll();
 
                     }
 
@@ -230,7 +236,9 @@ public class LocalFragment extends Fragment {
                     sportDAO.delete(sports.get(sportIndex));
                     Toast.makeText(view.getContext(),"Deleted",Toast.LENGTH_SHORT).show();
 
+                    sports = sportDAO.getAll();
                     sportIndex = 0;
+                    set(0);
 
                 }
 
@@ -266,8 +274,9 @@ public class LocalFragment extends Fragment {
                     athleteDAO.delete(athletes.get(athleteIndex));
                     Toast.makeText(view.getContext(),"Deleted",Toast.LENGTH_SHORT).show();
 
+                    athletes = athleteDAO.getAll();
                     athleteIndex = 0;
-
+                    set(1);
 
                 }
 
@@ -303,7 +312,9 @@ public class LocalFragment extends Fragment {
                     teamDAO.delete(teams.get(teamIndex));
                     Toast.makeText(view.getContext(),"Deleted",Toast.LENGTH_SHORT).show();
 
+                    teams = teamDAO.getAll();
                     teamIndex = 0;
+                    set(2);
 
                 }
 
