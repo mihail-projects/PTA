@@ -238,7 +238,10 @@ public class LocalFragment extends Fragment {
 
                     sports = sportDAO.getAll();
                     sportIndex = 0;
-                    set(0);
+
+                    if(sports.size() > 0) {
+                        set(0);
+                    }
 
                 }
 
@@ -276,7 +279,10 @@ public class LocalFragment extends Fragment {
 
                     athletes = athleteDAO.getAll();
                     athleteIndex = 0;
-                    set(1);
+
+                    if(athletes.size() > 0){
+                        set(1);
+                    }
 
                 }
 
@@ -314,7 +320,10 @@ public class LocalFragment extends Fragment {
 
                     teams = teamDAO.getAll();
                     teamIndex = 0;
-                    set(2);
+
+                    if(teams.size() > 0) {
+                        set(2);
+                    }
 
                 }
 
@@ -364,50 +373,6 @@ public class LocalFragment extends Fragment {
 
             });
 
-            view.findViewById(R.id.teamsNext).setOnClickListener(v -> {
-
-                if(tNew){
-                    tNew = false;
-                    teamIndex = 0;
-                    return;
-                }
-
-                if (teams.size() > 0) {
-
-                    if (teamIndex == teams.size() - 1) {
-                        teamIndex = 0;
-                    } else {
-                        teamIndex++;
-                    }
-
-                    set(1);
-
-                }
-
-            });
-
-            view.findViewById(R.id.teamsPrev).setOnClickListener(v -> {
-
-                if(tNew){
-                    tNew = false;
-                    teamIndex = 0;
-                    return;
-                }
-
-                if (teams.size() > 0) {
-
-                    if (teamIndex == 0) {
-                        teamIndex = teams.size() - 1;
-                    } else {
-                        teamIndex--;
-                    }
-
-                    set(1);
-
-                }
-
-            });
-
             view.findViewById(R.id.athletesNext).setOnClickListener(v -> {
 
                 if(aNew){
@@ -424,7 +389,7 @@ public class LocalFragment extends Fragment {
                         athleteIndex++;
                     }
 
-                    set(2);
+                    set(1);
 
                 }
 
@@ -444,6 +409,50 @@ public class LocalFragment extends Fragment {
                         athleteIndex = athletes.size() - 1;
                     } else {
                         athleteIndex--;
+                    }
+
+                    set(1);
+
+                }
+
+            });
+
+            view.findViewById(R.id.teamsNext).setOnClickListener(v -> {
+
+                if(tNew){
+                    tNew = false;
+                    teamIndex = 0;
+                    return;
+                }
+
+                if (teams.size() > 0) {
+
+                    if (teamIndex == teams.size() - 1) {
+                        teamIndex = 0;
+                    } else {
+                        teamIndex++;
+                    }
+
+                    set(2);
+
+                }
+
+            });
+
+            view.findViewById(R.id.teamsPrev).setOnClickListener(v -> {
+
+                if(tNew){
+                    tNew = false;
+                    teamIndex = 0;
+                    return;
+                }
+
+                if (teams.size() > 0) {
+
+                    if (teamIndex == 0) {
+                        teamIndex = teams.size() - 1;
+                    } else {
+                        teamIndex--;
                     }
 
                     set(2);
@@ -467,15 +476,15 @@ public class LocalFragment extends Fragment {
             athleteLastname.setText(athletes.get(athleteIndex).lastname);
             athleteCity.setText(athletes.get(athleteIndex).city);
             athleteCountry.setText(athletes.get(athleteIndex).country);
-            athleteSportCode.setText(athletes.get(athleteIndex).sportCode);
-            athleteBirthYear.setText(athletes.get(athleteIndex).birthYear);
+            athleteSportCode.setText(String.valueOf(athletes.get(athleteIndex).sportCode));
+            athleteBirthYear.setText(String.valueOf(athletes.get(athleteIndex).birthYear));
         }else if(what == 2){
             teamName.setText(teams.get(teamIndex).name);
             teamStadium.setText(teams.get(teamIndex).stadium);
             teamCity.setText(teams.get(teamIndex).city);
             teamCountry.setText(teams.get(teamIndex).country);
-            teamSportCode.setText(teams.get(teamIndex).sportCode);
-            teamFoundingYear.setText(teams.get(teamIndex).foundingYear);
+            teamSportCode.setText(String.valueOf(teams.get(teamIndex).sportCode));
+            teamFoundingYear.setText(String.valueOf(teams.get(teamIndex).foundingYear));
         }
 
     }
