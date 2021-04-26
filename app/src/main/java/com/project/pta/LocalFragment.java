@@ -247,7 +247,7 @@ public class LocalFragment extends Fragment {
 
             });
 
-            view.findViewById(R.id.athletesNew).setOnClickListener(v -> {
+            view.findViewById(R.id.matchesNew).setOnClickListener(v -> {
                 aNew = true;
                 athleteName.setText("");
                 athleteLastname.setText("");
@@ -257,7 +257,7 @@ public class LocalFragment extends Fragment {
                 athleteBirthYear.setText("");
             });
 
-            view.findViewById(R.id.athletesRemove).setOnClickListener(v -> {
+            view.findViewById(R.id.matchesRemove).setOnClickListener(v -> {
 
                 if(aNew){
                     aNew = false;

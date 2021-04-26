@@ -68,7 +68,7 @@
             app:layout_constraintTop_toBottomOf="@+id/matchCountry" />
 
         <Button
-            android:id="@+id/athletesNew"
+            android:id="@+id/matchesNew"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginEnd="100dp"
@@ -79,7 +79,7 @@
             app:layout_constraintTop_toBottomOf="@+id/newPlayer" />
 
         <Button
-            android:id="@+id/athletesRemove"
+            android:id="@+id/matchesRemove"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="100dp"
@@ -141,7 +141,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/athletesNew" />
+            app:layout_constraintTop_toBottomOf="@+id/matchesNew" />
 
         <ListView
             android:id="@+id/matchPlayers"
