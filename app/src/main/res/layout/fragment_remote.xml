@@ -90,7 +90,7 @@
             app:layout_constraintTop_toBottomOf="@+id/newPlayer" />
 
         <Button
-            android:id="@+id/athletesNext"
+            android:id="@+id/matchesNext"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="50dp"
@@ -109,10 +109,10 @@
             android:text="+"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/newPlayer"
-            app:layout_constraintTop_toBottomOf="@+id/athletesNext" />
+            app:layout_constraintTop_toBottomOf="@+id/matchesNext" />
 
         <Button
-            android:id="@+id/athletesPrev"
+            android:id="@+id/matchesPrev"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="250dp"
@@ -131,7 +131,7 @@
             android:text="-"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/newPlayer"
-            app:layout_constraintTop_toBottomOf="@+id/athletesPrev" />
+            app:layout_constraintTop_toBottomOf="@+id/matchesPrev" />
 
         <Button
             android:id="@+id/update"

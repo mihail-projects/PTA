@@ -231,7 +231,7 @@
             app:layout_constraintTop_toBottomOf="@+id/sportGender" />
 
         <Button
-            android:id="@+id/matchesNew"
+            android:id="@+id/athletesNew"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="170dp"
@@ -261,13 +261,13 @@
             app:layout_constraintTop_toBottomOf="@+id/sportGender" />
 
         <Button
-            android:id="@+id/matchesRemove"
+            android:id="@+id/athletesRemove"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="25dp"
             android:text="DELETE"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/matchesNew"
+            app:layout_constraintStart_toEndOf="@+id/athletesNew"
             app:layout_constraintTop_toBottomOf="@+id/athleteBirth" />
 
         <Button

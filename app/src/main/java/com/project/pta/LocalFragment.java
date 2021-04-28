@@ -70,8 +70,10 @@ public class LocalFragment extends Fragment {
     }
 
 
+    //deiktis gia ta velakia
     int sportIndex, teamIndex, athleteIndex = 0;
 
+    //stoixeia
     TextView sportName;
     TextView sportType;
     TextView sportGender;
@@ -90,14 +92,17 @@ public class LocalFragment extends Fragment {
     TextView teamSportCode;
     TextView teamFoundingYear;
 
+    //mi se niazei
     SportDAO sportDAO;
     TeamDAO teamDAO;
     AthleteDAO athleteDAO;
 
+    //listes pou bainoun ta dedomena pou ginontai fetch apo ti vasi
     List<Sport> sports;
     List<Team> teams;
     List<Athlete> athletes;
 
+    //mi se niazei
     boolean sNew = false;
     boolean aNew = false;
     boolean tNew = false;
@@ -111,6 +116,7 @@ public class LocalFragment extends Fragment {
         View view = getView();
         if(view != null) {
 
+            //adistoixeizoume ta pedia stis metavlites
             sportName = view.findViewById(R.id.sportName);
             sportType = view.findViewById(R.id.sportType);
             sportGender = view.findViewById(R.id.sportGender);
@@ -129,6 +135,7 @@ public class LocalFragment extends Fragment {
             teamSportCode = view.findViewById(R.id.teamSportCode);
             teamFoundingYear = view.findViewById(R.id.teamFounding);
 
+            //setaroume ti vasi
             AppDatabase db = Room.databaseBuilder(view.getContext(), AppDatabase.class, "database").allowMainThreadQueries().build();
 
             sportDAO = db.sportDAO();
@@ -140,6 +147,7 @@ public class LocalFragment extends Fragment {
             athleteDAO = db.athleteDAO();
             athletes = athleteDAO.getAll();
 
+            //vazoume se ola ta pedia ti proti grami tis vasis an iparxei
             if(sports.size() > 0){
                 set(0);
             }
@@ -150,7 +158,7 @@ public class LocalFragment extends Fragment {
                 set(2);
             }
 
-            //Updates automatically
+            //to event gia to update. An den einai adeio tsekarei an exoume patisei to New prota. An nai, vazei nea eggrafi sti vasi allios kanei update in iparxousa
             view.findViewById(R.id.update).setOnClickListener(v -> {
 
                 if(!sportName.getText().toString().isEmpty() && !sportType.getText().toString().isEmpty() && !sportGender.getText().toString().isEmpty()){
@@ -168,6 +176,7 @@ public class LocalFragment extends Fragment {
 
                 }
 
+                //idia fasi tsekarei kai an iparxoun sport
                 if(!athleteName.getText().toString().isEmpty() && !athleteLastname.getText().toString().isEmpty() && !athleteCity.getText().toString().isEmpty() && !athleteCountry.getText().toString().isEmpty() && !athleteSportCode.getText().toString().isEmpty() && !athleteBirthYear.getText().toString().isEmpty()){
 
                     if(Integer.parseInt(athleteSportCode.getText().toString()) > sports.size()-1){
@@ -189,6 +198,7 @@ public class LocalFragment extends Fragment {
 
                 }
 
+                //to idio
                 if(!teamName.getText().toString().isEmpty() && !teamStadium.getText().toString().isEmpty() && !teamCity.getText().toString().isEmpty() && !teamCountry.getText().toString().isEmpty() && !teamSportCode.getText().toString().isEmpty() && !teamFoundingYear.getText().toString().isEmpty()){
 
                     if(Integer.parseInt(teamSportCode.getText().toString()) > sports.size()-1){
@@ -212,6 +222,7 @@ public class LocalFragment extends Fragment {
 
             });
 
+            //event gia to new twn sport. Adeiazei ta pedia
             view.findViewById(R.id.sportsNew).setOnClickListener(v -> {
                 sNew = true;
                 sportName.setText("");
@@ -219,6 +230,7 @@ public class LocalFragment extends Fragment {
                 sportGender.setText("");
             });
 
+            //diagrafei sport apo ti vash kai enimerwnei kai th topikh lista
             view.findViewById(R.id.sportsRemove).setOnClickListener(v -> {
 
                 if(sNew){
@@ -247,7 +259,8 @@ public class LocalFragment extends Fragment {
 
             });
 
-            view.findViewById(R.id.matchesNew).setOnClickListener(v -> {
+            //to idio gia athletes
+            view.findViewById(R.id.athletesNew).setOnClickListener(v -> {
                 aNew = true;
                 athleteName.setText("");
                 athleteLastname.setText("");
@@ -257,7 +270,8 @@ public class LocalFragment extends Fragment {
                 athleteBirthYear.setText("");
             });
 
-            view.findViewById(R.id.matchesRemove).setOnClickListener(v -> {
+            //to idio gia athletes
+            view.findViewById(R.id.athletesRemove).setOnClickListener(v -> {
 
                 if(aNew){
                     aNew = false;
@@ -288,6 +302,7 @@ public class LocalFragment extends Fragment {
 
             });
 
+            //to idio gia omades
             view.findViewById(R.id.teamsNew).setOnClickListener(v -> {
                 tNew = true;
                 teamName.setText("");
@@ -298,6 +313,7 @@ public class LocalFragment extends Fragment {
                 teamFoundingYear.setText("");
             });
 
+            //to idio gia omades
             view.findViewById(R.id.teamsRemove).setOnClickListener(v -> {
 
                 if(tNew){
@@ -329,6 +345,7 @@ public class LocalFragment extends Fragment {
 
             });
 
+            //allazei to index an den einai adeia h omada kai paei bros eggrafes
             getView().findViewById(R.id.sportsNext).setOnClickListener(v -> {
 
                 if(sNew){
@@ -351,6 +368,7 @@ public class LocalFragment extends Fragment {
 
             });
 
+            //pros ta piso
             view.findViewById(R.id.sportsPrev).setOnClickListener(v -> {
 
                 if(sNew){
@@ -373,6 +391,7 @@ public class LocalFragment extends Fragment {
 
             });
 
+            //bros gia athletes
             view.findViewById(R.id.athletesNext).setOnClickListener(v -> {
 
                 if(aNew){
@@ -395,6 +414,7 @@ public class LocalFragment extends Fragment {
 
             });
 
+            //piso gia athletes
             view.findViewById(R.id.athletesPrev).setOnClickListener(v -> {
 
                 if(aNew){
@@ -417,6 +437,7 @@ public class LocalFragment extends Fragment {
 
             });
 
+            //bros gia omades
             view.findViewById(R.id.teamsNext).setOnClickListener(v -> {
 
                 if(tNew){
@@ -439,6 +460,7 @@ public class LocalFragment extends Fragment {
 
             });
 
+            //piso gia omades
             view.findViewById(R.id.teamsPrev).setOnClickListener(v -> {
 
                 if(tNew){
@@ -465,6 +487,7 @@ public class LocalFragment extends Fragment {
 
     }
 
+    //kanei set ta arxika pedia
     void set(int what){
 
         if(what == 0){

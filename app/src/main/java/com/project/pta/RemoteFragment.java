@@ -76,6 +76,7 @@ public class RemoteFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_remote, container, false);
     }
 
+    //stoixeia gonwn
     TextView matchDate;
     TextView matchCity;
     TextView matchCountry;
@@ -84,6 +85,7 @@ public class RemoteFragment extends Fragment {
     ListView playersList;
     TextView newPlayer;
 
+    //index gia ta velakia kai metavlites database
     int index;
     List<DocumentSnapshot> documents;
     ArrayAdapter<String> arrayAdapter;
@@ -103,6 +105,7 @@ public class RemoteFragment extends Fragment {
         View view = getView();
         if (view != null) {
 
+            //adistoixei pedia me metavlites
             matchDate = view.findViewById(R.id.matchDate);
             matchCity = view.findViewById(R.id.matchCity);
             matchCountry = view.findViewById(R.id.matchCountry);
@@ -113,13 +116,16 @@ public class RemoteFragment extends Fragment {
 
             newPlayer = view.findViewById(R.id.newPlayer);
 
+            //setarei vash
             list = new ArrayList<>(Arrays.asList(new String[0]));
             arrayAdapter = new ArrayAdapter(view.getContext(), R.layout.listitem, R.id.player, list);
 
             db = FirebaseFirestore.getInstance();
+
+            //fernei data apo th vash
             fetch();
 
-
+            //prosthetei paikth sth lista. prota tous vazei se ena pinaka kai meta sto element lista
             view.findViewById(R.id.addPlayer).setOnClickListener(v -> {
 
                 if (!newPlayer.getText().toString().isEmpty()) {
@@ -129,7 +135,7 @@ public class RemoteFragment extends Fragment {
 
             });
 
-
+            //afairei paikth tsekarondas ama einai adeia prota
             view.findViewById(R.id.removePlayer).setOnClickListener(v -> {
                 if (arrayAdapter.isEmpty()) return;
                 arrayAdapter.remove(playersList.getAdapter().getItem(listPos).toString());
@@ -137,6 +143,7 @@ public class RemoteFragment extends Fragment {
             });
 
 
+            //to idio me to local, ama exeis patisei new kanei nea eggrafi, allios update. tsekarei ta pedia na mhn einai adeia prota. einai buggy
             view.findViewById(R.id.update).setOnClickListener(v -> {
 
                 if (!matchDate.getText().toString().isEmpty() && !matchCity.getText().toString().isEmpty() && !matchCountry.getText().toString().isEmpty() && !matchSport.getText().toString().isEmpty() && playersList.getCount() > 0) {
@@ -177,6 +184,7 @@ public class RemoteFragment extends Fragment {
             });
 
 
+            //nea match adiazei pedia
             view.findViewById(R.id.matchesNew).setOnClickListener(v -> {
 
                 xNew = true;
@@ -190,6 +198,7 @@ public class RemoteFragment extends Fragment {
             });
 
 
+            //diagrafei mats, adeiazei th vash kai kanei update th lista
             view.findViewById(R.id.matchesRemove).setOnClickListener(v -> {
 
                 if (xNew) {
@@ -215,7 +224,8 @@ public class RemoteFragment extends Fragment {
             });
 
 
-            getView().findViewById(R.id.athletesPrev).setOnClickListener(v -> {
+            //prohgoumeno mats, allazei pedia ktl
+            getView().findViewById(R.id.matchesPrev).setOnClickListener(v -> {
 
                 if (xNew) {
                     xNew = false;
@@ -248,7 +258,8 @@ public class RemoteFragment extends Fragment {
             });
 
 
-            view.findViewById(R.id.athletesNext).setOnClickListener(v -> {
+            //epomeno mats
+            view.findViewById(R.id.matchesNext).setOnClickListener(v -> {
 
                 if (xNew) {
                     xNew = false;
@@ -284,6 +295,7 @@ public class RemoteFragment extends Fragment {
 
     }
 
+    //fernei fata apo vash kai vazei to proto sta pedia
     void fetch() {
 
         index = 0;
