@@ -5,12 +5,15 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -69,8 +72,6 @@ public class LocalFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_local, container, false);
     }
 
-
-    //deiktis gia ta velakia
     int sportIndex, teamIndex, athleteIndex = 0;
 
     //stoixeia
@@ -92,21 +93,22 @@ public class LocalFragment extends Fragment {
     TextView teamSportCode;
     TextView teamFoundingYear;
 
-    //mi se niazei
     SportDAO sportDAO;
     TeamDAO teamDAO;
     AthleteDAO athleteDAO;
 
-    //listes pou bainoun ta dedomena pou ginontai fetch apo ti vasi
     List<Sport> sports;
     List<Team> teams;
     List<Athlete> athletes;
 
-    //mi se niazei
     boolean sNew = false;
     boolean aNew = false;
     boolean tNew = false;
 
+    NumberPicker athletePicker;
+    NumberPicker teamPicker;
+
+    NumberPicker athleteBirthPicker;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -116,7 +118,11 @@ public class LocalFragment extends Fragment {
         View view = getView();
         if(view != null) {
 
-            //adistoixeizoume ta pedia stis metavlites
+            athletePicker = view.findViewById(R.id.athleteSportCode);
+            teamPicker = view.findViewById(R.id.teamSportCode);
+
+            athleteBirthPicker = view.findViewById(R.id.athleteBirth);
+
             sportName = view.findViewById(R.id.sportName);
             sportType = view.findViewById(R.id.sportType);
             sportGender = view.findViewById(R.id.sportGender);
@@ -125,17 +131,16 @@ public class LocalFragment extends Fragment {
             athleteLastname = view.findViewById(R.id.matchCity);
             athleteCity = view.findViewById(R.id.matchCountry);
             athleteCountry = view.findViewById(R.id.matchSport);
-            athleteSportCode = view.findViewById(R.id.athleteSportCode);
-            athleteBirthYear = view.findViewById(R.id.athleteBirth);
+            //athleteSportCode = view.findViewById(R.id.athleteSportCode);
+            //athleteBirthYear = view.findViewById(R.id.athleteBirth);
 
             teamName = view.findViewById(R.id.teamName);
             teamStadium = view.findViewById(R.id.teamStadium);
             teamCity = view.findViewById(R.id.teamCity);
             teamCountry = view.findViewById(R.id.teamCountry);
-            teamSportCode = view.findViewById(R.id.teamSportCode);
+            //teamSportCode = view.findViewById(R.id.teamSportCode);
             teamFoundingYear = view.findViewById(R.id.teamFounding);
 
-            //setaroume ti vasi
             AppDatabase db = Room.databaseBuilder(view.getContext(), AppDatabase.class, "database").allowMainThreadQueries().build();
 
             sportDAO = db.sportDAO();
@@ -147,7 +152,6 @@ public class LocalFragment extends Fragment {
             athleteDAO = db.athleteDAO();
             athletes = athleteDAO.getAll();
 
-            //vazoume se ola ta pedia ti proti grami tis vasis an iparxei
             if(sports.size() > 0){
                 set(0);
             }
@@ -158,7 +162,21 @@ public class LocalFragment extends Fragment {
                 set(2);
             }
 
-            //to event gia to update. An den einai adeio tsekarei an exoume patisei to New prota. An nai, vazei nea eggrafi sti vasi allios kanei update in iparxousa
+            if(sports.size() == 0) {
+                athletePicker.setEnabled(false);
+                teamPicker.setEnabled(false);
+            }else{
+                athletePicker.setEnabled(true);
+                teamPicker.setEnabled(true);
+                athletePicker.setMinValue(0);
+                teamPicker.setMinValue(0);
+                athletePicker.setMaxValue(sports.size()-1);
+                teamPicker.setMaxValue(sports.size()-1);
+            }
+
+            athleteBirthPicker.setMinValue(Calendar.getInstance().get(Calendar.YEAR) - 60);
+            athleteBirthPicker.setMaxValue(Calendar.getInstance().get(Calendar.YEAR) - 18);
+
             view.findViewById(R.id.update).setOnClickListener(v -> {
 
                 if(!sportName.getText().toString().isEmpty() && !sportType.getText().toString().isEmpty() && !sportGender.getText().toString().isEmpty()){
@@ -174,55 +192,60 @@ public class LocalFragment extends Fragment {
 
                     sports = sportDAO.getAll();
 
+                    if(sports.size() == 0) {
+                        athletePicker.setEnabled(false);
+                        teamPicker.setEnabled(false);
+                    }else{
+                        athletePicker.setEnabled(true);
+                        teamPicker.setEnabled(true);
+                        athletePicker.setMinValue(0);
+                        teamPicker.setMinValue(0);
+                        athletePicker.setMaxValue(sports.size()-1);
+                        teamPicker.setMaxValue(sports.size()-1);
+                    }
+
+                }else{
+                    Toast.makeText(view.getContext(), "Fields missing", Toast.LENGTH_SHORT).show();
                 }
 
-                //idia fasi tsekarei kai an iparxoun sport
-                if(!athleteName.getText().toString().isEmpty() && !athleteLastname.getText().toString().isEmpty() && !athleteCity.getText().toString().isEmpty() && !athleteCountry.getText().toString().isEmpty() && !athleteSportCode.getText().toString().isEmpty() && !athleteBirthYear.getText().toString().isEmpty()){
+                if(sports.size() > 0 && !athleteName.getText().toString().isEmpty() && !athleteLastname.getText().toString().isEmpty() && !athleteCity.getText().toString().isEmpty() && !athleteCountry.getText().toString().isEmpty()){
 
-                    if(Integer.parseInt(athleteSportCode.getText().toString()) > sports.size()-1){
-                        Toast.makeText(view.getContext(),"Sport doesn't exist",Toast.LENGTH_SHORT).show();
-                    }else {
+                    Log.d("-----------------", String.valueOf(athletePicker.getValue()));
 
                         if(aNew || athletes.size() == 0) {
-                            athleteDAO.insert(new Athlete(0, athleteName.getText().toString(), athleteLastname.getText().toString(), athleteCity.getText().toString(), athleteCountry.getText().toString(), Integer.parseInt(athleteSportCode.getText().toString()), Integer.parseInt(athleteBirthYear.getText().toString())));
+                            athleteDAO.insert(new Athlete(0, athleteName.getText().toString(), athleteLastname.getText().toString(), athleteCity.getText().toString(), athleteCountry.getText().toString(), athletePicker.getValue(), athleteBirthPicker.getValue()));
                             Toast.makeText(view.getContext(), "Added Athlete", Toast.LENGTH_SHORT).show();
                             aNew = false;
                         }else{
-                            athleteDAO.update(new Athlete(athletes.get(athleteIndex).aid, athleteName.getText().toString(), athleteLastname.getText().toString(), athleteCity.getText().toString(), athleteCountry.getText().toString(), Integer.parseInt(athleteSportCode.getText().toString()), Integer.parseInt(athleteBirthYear.getText().toString())));
+                            athleteDAO.update(new Athlete(athletes.get(athleteIndex).aid, athleteName.getText().toString(), athleteLastname.getText().toString(), athleteCity.getText().toString(), athleteCountry.getText().toString(), athletePicker.getValue(), athleteBirthPicker.getValue()));
                             Toast.makeText(view.getContext(), "Updated Athlete", Toast.LENGTH_SHORT).show();
                         }
 
                         athletes = athleteDAO.getAll();
 
-                    }
-
+                }else{
+                    Toast.makeText(view.getContext(), "Athletes: fields missing or no sports", Toast.LENGTH_SHORT).show();
                 }
 
-                //to idio
-                if(!teamName.getText().toString().isEmpty() && !teamStadium.getText().toString().isEmpty() && !teamCity.getText().toString().isEmpty() && !teamCountry.getText().toString().isEmpty() && !teamSportCode.getText().toString().isEmpty() && !teamFoundingYear.getText().toString().isEmpty()){
-
-                    if(Integer.parseInt(teamSportCode.getText().toString()) > sports.size()-1){
-                        Toast.makeText(view.getContext(),"Sport doesn't exist",Toast.LENGTH_SHORT).show();
-                    }else {
+                if(sports.size() > 0 && !teamName.getText().toString().isEmpty() && !teamStadium.getText().toString().isEmpty() && !teamCity.getText().toString().isEmpty() && !teamCountry.getText().toString().isEmpty() && !teamFoundingYear.getText().toString().isEmpty()){
 
                         if(tNew || teams.size() == 0) {
-                            teamDAO.insert(new Team(0, teamName.getText().toString(), teamStadium.getText().toString(), teamCity.getText().toString(), teamCountry.getText().toString(), Integer.parseInt(teamSportCode.getText().toString()), Integer.parseInt(teamFoundingYear.getText().toString())));
+                            teamDAO.insert(new Team(0, teamName.getText().toString(), teamStadium.getText().toString(), teamCity.getText().toString(), teamCountry.getText().toString(), teamPicker.getValue(), Integer.parseInt(teamFoundingYear.getText().toString())));
                             Toast.makeText(view.getContext(), "Added Team", Toast.LENGTH_SHORT).show();
                             tNew = false;
                         }else{
-                            teamDAO.update(new Team(teams.get(teamIndex).tid, teamName.getText().toString(), teamStadium.getText().toString(), teamCity.getText().toString(), teamCountry.getText().toString(), Integer.parseInt(teamSportCode.getText().toString()), Integer.parseInt(teamFoundingYear.getText().toString())));
+                            teamDAO.update(new Team(teams.get(teamIndex).tid, teamName.getText().toString(), teamStadium.getText().toString(), teamCity.getText().toString(), teamCountry.getText().toString(), teamPicker.getValue(), Integer.parseInt(teamFoundingYear.getText().toString())));
                             Toast.makeText(view.getContext(), "Updated Team", Toast.LENGTH_SHORT).show();
                         }
 
                         teams = teamDAO.getAll();
 
-                    }
-
+                }else{
+                    Toast.makeText(view.getContext(), "Teams: fields missing or no sports", Toast.LENGTH_SHORT).show();
                 }
 
             });
 
-            //event gia to new twn sport. Adeiazei ta pedia
             view.findViewById(R.id.sportsNew).setOnClickListener(v -> {
                 sNew = true;
                 sportName.setText("");
@@ -230,7 +253,6 @@ public class LocalFragment extends Fragment {
                 sportGender.setText("");
             });
 
-            //diagrafei sport apo ti vash kai enimerwnei kai th topikh lista
             view.findViewById(R.id.sportsRemove).setOnClickListener(v -> {
 
                 if(sNew){
@@ -255,22 +277,52 @@ public class LocalFragment extends Fragment {
                         set(0);
                     }
 
+                    athleteDAO.remove(sportIndex);
+                    teamDAO.remove(sportIndex);
+
+                    athletes = athleteDAO.getAll();
+                    athleteIndex = 0;
+
+                    teams = teamDAO.getAll();
+                    teamIndex = 0;
+
+                    if(athletes.size() > 0) {
+                        set(1);
+                    }else{
+                        athleteName.setText("");
+                        athleteLastname.setText("");
+                        athleteCity.setText("");
+                        athleteCountry.setText("");
+                        athletePicker.setValue(0);
+                        athleteBirthPicker.setValue(Calendar.getInstance().get(Calendar.YEAR) - 18);
+                    }
+
+                    if(teams.size() > 0) {
+                        set(2);
+                    }else{
+                        teamName.setText("");
+                        teamStadium.setText("");
+                        teamCity.setText("");
+                        teamCountry.setText("");
+                        teamPicker.setValue(0);
+                        teamFoundingYear.setText("");
+                    }
+
                 }
 
             });
 
-            //to idio gia athletes
             view.findViewById(R.id.athletesNew).setOnClickListener(v -> {
                 aNew = true;
                 athleteName.setText("");
                 athleteLastname.setText("");
                 athleteCity.setText("");
                 athleteCountry.setText("");
-                athleteSportCode.setText("");
-                athleteBirthYear.setText("");
+                //athleteSportCode.setText("");
+                athletePicker.setValue(0);
+                athleteBirthPicker.setValue(Calendar.getInstance().get(Calendar.YEAR) - 18);
             });
 
-            //to idio gia athletes
             view.findViewById(R.id.athletesRemove).setOnClickListener(v -> {
 
                 if(aNew){
@@ -285,8 +337,9 @@ public class LocalFragment extends Fragment {
                     athleteLastname.setText("");
                     athleteCity.setText("");
                     athleteCountry.setText("");
-                    athleteSportCode.setText("");
-                    athleteBirthYear.setText("");
+                    //athleteSportCode.setText("");
+                    athletePicker.setValue(0);
+                    athleteBirthPicker.setValue(Calendar.getInstance().get(Calendar.YEAR) - 18);
 
                     athleteDAO.delete(athletes.get(athleteIndex));
                     Toast.makeText(view.getContext(),"Deleted",Toast.LENGTH_SHORT).show();
@@ -302,18 +355,17 @@ public class LocalFragment extends Fragment {
 
             });
 
-            //to idio gia omades
             view.findViewById(R.id.teamsNew).setOnClickListener(v -> {
                 tNew = true;
                 teamName.setText("");
                 teamStadium.setText("");
                 teamCity.setText("");
                 teamCountry.setText("");
-                teamSportCode.setText("");
+                //teamSportCode.setText("");
+                teamPicker.setValue(0);
                 teamFoundingYear.setText("");
             });
 
-            //to idio gia omades
             view.findViewById(R.id.teamsRemove).setOnClickListener(v -> {
 
                 if(tNew){
@@ -328,7 +380,8 @@ public class LocalFragment extends Fragment {
                     teamStadium.setText("");
                     teamCity.setText("");
                     teamCountry.setText("");
-                    teamSportCode.setText("");
+                    //teamSportCode.setText("");
+                    teamPicker.setValue(0);
                     teamFoundingYear.setText("");
 
                     teamDAO.delete(teams.get(teamIndex));
@@ -345,7 +398,6 @@ public class LocalFragment extends Fragment {
 
             });
 
-            //allazei to index an den einai adeia h omada kai paei bros eggrafes
             getView().findViewById(R.id.sportsNext).setOnClickListener(v -> {
 
                 if(sNew){
@@ -368,7 +420,6 @@ public class LocalFragment extends Fragment {
 
             });
 
-            //pros ta piso
             view.findViewById(R.id.sportsPrev).setOnClickListener(v -> {
 
                 if(sNew){
@@ -391,7 +442,6 @@ public class LocalFragment extends Fragment {
 
             });
 
-            //bros gia athletes
             view.findViewById(R.id.athletesNext).setOnClickListener(v -> {
 
                 if(aNew){
@@ -414,7 +464,6 @@ public class LocalFragment extends Fragment {
 
             });
 
-            //piso gia athletes
             view.findViewById(R.id.athletesPrev).setOnClickListener(v -> {
 
                 if(aNew){
@@ -437,7 +486,6 @@ public class LocalFragment extends Fragment {
 
             });
 
-            //bros gia omades
             view.findViewById(R.id.teamsNext).setOnClickListener(v -> {
 
                 if(tNew){
@@ -460,7 +508,6 @@ public class LocalFragment extends Fragment {
 
             });
 
-            //piso gia omades
             view.findViewById(R.id.teamsPrev).setOnClickListener(v -> {
 
                 if(tNew){
@@ -487,7 +534,6 @@ public class LocalFragment extends Fragment {
 
     }
 
-    //kanei set ta arxika pedia
     void set(int what){
 
         if(what == 0){
@@ -499,14 +545,14 @@ public class LocalFragment extends Fragment {
             athleteLastname.setText(athletes.get(athleteIndex).lastname);
             athleteCity.setText(athletes.get(athleteIndex).city);
             athleteCountry.setText(athletes.get(athleteIndex).country);
-            athleteSportCode.setText(String.valueOf(athletes.get(athleteIndex).sportCode));
-            athleteBirthYear.setText(String.valueOf(athletes.get(athleteIndex).birthYear));
+            athletePicker.setValue(athletes.get(athleteIndex).sportCode);
+            athleteBirthPicker.setValue(athletes.get(athleteIndex).birthYear);
         }else if(what == 2){
             teamName.setText(teams.get(teamIndex).name);
             teamStadium.setText(teams.get(teamIndex).stadium);
             teamCity.setText(teams.get(teamIndex).city);
             teamCountry.setText(teams.get(teamIndex).country);
-            teamSportCode.setText(String.valueOf(teams.get(teamIndex).sportCode));
+            teamPicker.setValue(teams.get(teamIndex).sportCode);
             teamFoundingYear.setText(String.valueOf(teams.get(teamIndex).foundingYear));
         }
 

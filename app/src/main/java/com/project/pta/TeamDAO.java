@@ -23,4 +23,7 @@ public interface TeamDAO {
     @Delete
     void delete(Team athlete);
 
+    @Query("DELETE FROM team WHERE sportCode = :sportCode")
+    void remove(int sportCode);
+
 }

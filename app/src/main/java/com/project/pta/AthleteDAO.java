@@ -23,4 +23,7 @@ public interface AthleteDAO {
     @Delete
     void delete(Athlete athlete);
 
+    @Query("DELETE FROM athlete WHERE sportCode = :sportCode")
+    void remove(int sportCode);
+
 }
